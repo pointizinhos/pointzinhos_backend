@@ -1,2 +1,3 @@
 pointzinhosbackendenv/
 *.DS_Store*
+*.pyc
