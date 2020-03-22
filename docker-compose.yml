@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+
+  backend_service:
+    build: ./backend_service
+    container_name: backend_service
+    restart: always
+    environment:
+      - APP_NAME=backend_service
+      - USER=postgres
+      - PASSWORD=Ilovecoding123
+      - URL=pointzinhosdatabase.creclu3dgqtj.sa-east-1.rds.amazonaws.com
+      - DATABASE=pointzinhosdatabase
+    ports:
+      - "8080:8080"

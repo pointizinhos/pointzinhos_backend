@@ -4,7 +4,8 @@ from flask_marshmallow import Marshmallow
 import os
 
 backend = Flask(__name__)
-backend.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://"+os.environ['user']+":"+os.environ['password']+"@"+os.environ['url']+"/"+os.environ['database'] 
+backend.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://"+os.environ['USER']+":"+os.environ['PASSWORD']+"@"+os.environ['URL']+"/"+os.environ['DATABASE'] 
+backend.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(backend)
 ma = Marshmallow(backend)
