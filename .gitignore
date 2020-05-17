@@ -1,3 +1,4 @@
 pointzinhosbackendenv/
 *.DS_Store*
 *.pyc
+.vscode/
