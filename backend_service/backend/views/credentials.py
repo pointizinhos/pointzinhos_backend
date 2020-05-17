@@ -26,10 +26,10 @@ def update():
     new_password = request.args.get("new_password")
     delete = request.args.get("delete")
 
-    credential = Credential.query.filter_by(username=username,password=password).first()
+    try:
+        credential = Credential.query.filter_by(username=username,password=password).first()
 
-    if(credential is not null):
-        try:
+        if(credential is not null):
             if(delete):
                 credential.is_deleted = True
             else:
@@ -37,7 +37,7 @@ def update():
             db.session.commit()
 
             return True
-        except Exception as e:
-            print e.message, e.args
+    except Exception as e:
+        print e.message, e.args
             
     return False

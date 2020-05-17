@@ -6,7 +6,8 @@ establishments = Blueprint("establishments", __name__)
 
 @establishments.route("/create", methods=["POST"])
 def create():
-    credentials_id = request.args.get("credentials_id")
+    username = request.args.get("username")
+    password = request.args.get("password")
     name = request.args.get("name")
     address = request.args.get("address")
     operator = request.args.get("operator")
@@ -17,6 +18,9 @@ def create():
     photos = request.args.get("photos")
 
 	try:
+        credential = Credential.query.filter_by(username=username,password=password)
+        credentials_id = credential.id
+
         establishment = Establishment(credentials_id=credentials_id,name=name,address=address,operator=operator,description=description,whatsapp=whatsapp,email=email,points_money_ratio=points_money_ratio,photos=photos)
         db.session.add(establishment)
         db.session.commit()
@@ -29,7 +33,8 @@ def create():
 
 @establishments.route("/update", methods=["POST"])
 def update():
-    credentials_id = request.args.get("credentials_id")
+    username = request.args.get("username")
+    password = request.args.get("password")
     name = request.args.get("name")
     address = request.args.get("address")
     operator = request.args.get("operator")
@@ -39,11 +44,14 @@ def update():
     points_money_ratio = request.args.get("points_money_ratio")
     photos = request.args.get("photos")
     delete = request.args.get("delete")
+    
+    try:
+        credential = Credential.query.filter_by(username=username,password=password)
+        credentials_id = credential.id
 
-    establishment = Establishment.query.filter_by(name=name).first()
+        establishment = Establishment.query.filter_by(credentials_id=credentials_id).first()
 
-    if(establishment is not null):
-        try:
+        if(establishment is not null):
             if(delete):
                 establishment.is_deleted = True
             else:
@@ -58,8 +66,8 @@ def update():
             db.session.commit()
             
             return True
-        except Exception as e:
-            print e.message, e.args
+    except Exception as e:
+        print e.message, e.args
             
     return False
 
@@ -68,14 +76,16 @@ def read():
     username = request.args.get("username")
     password = request.args.get("password")
 
-    credential = Credential.query.filter_by(username=username,password=password).first()
+    try:
+        credential = Credential.query.filter_by(username=username,password=password)
+        credentials_id = credential.id
 
-    if(credential is not null):
-        try:
-            establishment = Establishment.query.filter_by(credential_id=credential.id).first()
+        establishment = Establishment.query.filter_by(credential_id=credentials_id).first()
+
+        if(establishment is not null):
             establishmentSchema = EstablishmentSchema()
             return establishmentSchema.dump(establishment).data
-        except Exception as e:
-            print e.message, e.args
+    except Exception as e:
+        print e.message, e.args
     
     return False

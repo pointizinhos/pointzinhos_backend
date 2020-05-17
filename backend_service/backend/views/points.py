@@ -8,11 +8,14 @@ points = Blueprint("points", __name__)
 @points.route("/assign", methods=["POST"])
 def assign():
     phone_number = request.args.get("phone_number")
-    establishment_id = request.args.get("establishment_id")
+    establishment_name = request.args.get("establishment_name")
     amount = request.args.get("amount")
     is_purchase = request.args.get("is_purchase")
 
 	try:
+        establishment = Establishment.query.filter_by(establishment_name=establishment_name).first()
+        establishment_id = establishment.id
+
         client = Client.query.filter_by(phone_number=phone_number,establishment_id=establishment_id)
         client_id = client.id
 
@@ -29,10 +32,13 @@ def assign():
 @points.route("/redeem", methods=["POST"])
 def redeem():
     phone_number = request.args.get("phone_number")
-    establishment_id = request.args.get("establishment_id")
+    establishment_name = request.args.get("establishment_name")
     prize_id = request.args.get("prize_id")
 
     try:
+        establishment = Establishment.query.filter_by(establishment_name=establishment_name).first()
+        establishment_id = establishment.id
+
         client = Client.query.filter_by(phone_number=phone_number,establishment_id=establishment_id)
         client_id = client.id
 
