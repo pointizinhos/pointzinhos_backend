@@ -6,7 +6,7 @@ class Credential(db.Model):
     password = db.Column(db.String(50))
     is_deleted = db.Column(db.Boolean)
 
-    def __init__(self, id=None,username,password,is_deleted=None):
+    def __init__(self, username, password, id=None, is_deleted=None):
         self.id = id
         self.username = username
         self.password = password

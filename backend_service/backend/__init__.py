@@ -19,12 +19,10 @@ backend.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(backend)
 ma = Marshmallow(backend)
 
-# from .views.basic import basic
-# from .views.testing import testing
+from .views.basic import basic
 
-# backend.register_blueprint(basic)
-# backend.register_blueprint(testing)
+backend.register_blueprint(basic)
 
-from .views.credentials import credentials
+# from .views.credentials import credentials
 
-backend.register_blueprint(credentials)
+# backend.register_blueprint(credentials)

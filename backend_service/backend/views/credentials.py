@@ -8,7 +8,7 @@ def create():
     username = request.args.get("username")
     password = request.args.get("password")
 
-	try:
+    try:
         credential = Credential(username=username,password=password)
         db.session.add(credential)
         db.session.commit()
